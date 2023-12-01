@@ -6,7 +6,7 @@
 
 #define M_PI 3.14159265358979323846
 
-char getUserChoice() {
+char getUserInput() {
     char choice[2]; // Store a character and null terminator
     char input[100]; // Buffer for user input
 
@@ -14,7 +14,7 @@ char getUserChoice() {
 
     // Check if the input buffer contains a newline character
     if (input[0] != '\n') {
-        sscanf(input, "%1s", choice); // Extract the first character
+        sscanf(input, "%lf", choice); // Extract the user input value
     } else {
         choice[0] = '\0'; // Set choice to empty string if only newline was entered
     }

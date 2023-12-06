@@ -12,5 +12,6 @@ See Nichrome_Calc.c for electrical value calculation.
 
 Using the induction heating calculator in the link below, the necessary power at 100 kHz frequency was calculated as 0.9 kW.
 https://ultraflexpower.com/learn-about-induction-heating/induction-heating-calculation-tool/
-![Screenshot (171)](https://github.com/raeditio/Wax-Seal-Melter/assets/93297311/72b86494-eb76-43a9-8bf5-ffdeca31e4a3)
+![image](https://github.com/raeditio/Wax-Seal-Melter/assets/93297311/8bb65e12-3f84-49d3-8b0f-0a067fff6a2b)
+
 

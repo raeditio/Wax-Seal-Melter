@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
 
 #define M_PI 3.14159265358979323846
 
@@ -22,6 +23,22 @@ char getUserChoice() {
     return choice[0];
 }
 
+// Function to get user input for a double value
+bool getUserInput(char *result) {
+    char input[100]; // Buffer for user input
+
+    fgets(input, sizeof(input), stdin);
+
+    // Check if the input buffer contains a newline character
+    if (input[0] != '\n') {
+        sscanf(input, "%s", result); // Extract the input as a double
+		return true; // input is valid double
+    } else {
+        result[0] = '\0'; // Set choice to empty string if only newline was entered
+		return false; // input is not valid double
+    }
+}
+
 int main(void) {
 	double Tc = 150; // Tc is the required tempeture to be reached.
 	double kw = 0.25; // k1 is the thermal conductivity of wax in W/m-K.
@@ -32,7 +49,8 @@ int main(void) {
 	double l = 0.3; // l is the length of the nichrome wire.
 	double r = 15e-3; // r is the radius of the nichrome wire.
 
-	double newval = 0; // Store a character and null terminator
+	bool ModBool = false;
+	char userInput[100];
 
 	/* gives the option to modify values */
 	printf("Tc = %lf\n", Tc);
@@ -49,61 +67,37 @@ int main(void) {
 
 	if (userchoice == 'Y' || userchoice == 'y') {
 		printf("Tc = %lf. Enter a value to modify: \n", Tc);
-		char input = getUserChoice();
-		if (input != '\0') {
-			sscanf(&input, "%lf", &newval);
-			Tc = newval;
-		}
+		ModBool = getUserInput(&userInput);
+		if(ModBool) sscanf(userInput, "%lf", &Tc);
 
 		printf("kw = %lf. Enter a value to modify: \n", kw);
-		input = getUserChoice();
-		if (input != '\0') {
-			sscanf(&input, "%lf", &newval);
-			kw = newval;
-		}
+		ModBool = getUserInput(&userInput);
+		if(ModBool) sscanf(userInput, "%lf", &kw);
 
 		printf("kn = %lf. Enter a value to modify: \n", kn);
-		input = getUserChoice();
-		if (input != '\0') {
-			sscanf(&input, "%lf", &newval);
-			kn = newval;
-		}
+		ModBool = getUserInput(&userInput);
+		if(ModBool) sscanf(userInput, "%lf", &kn);
 
 		printf("d = %lf. Enter a value to modify: \n", d);
-		input = getUserChoice();
-		if (input != '\0') {
-			sscanf(&input, "%lf", &newval);
-			d = newval;
-		}
-		
+		ModBool = getUserInput(&userInput);
+		if(ModBool) sscanf(userInput, "%lf", &d);
+
 		printf("t = %lf. Enter a value to modify: \n", t);
-		input = getUserChoice();
-		if (input != '\0') {
-			sscanf(&input, "%lf", &newval);
-			t = newval;
-		}
+		ModBool = getUserInput(&userInput);
+		if(ModBool) sscanf(userInput, "%lf", &t);
 
 		printf("p = %lf. Enter a value to modify: \n", p);
-		input = getUserChoice();
-		if (input != '\0') {
-			sscanf(&input, "%lf", &newval);
-			p = newval;
-		}
+		ModBool = getUserInput(&userInput);
+		if(ModBool) sscanf(userInput, "%lf", &p);
 
 		printf("l = %lf. Enter a value to modify: \n", l);
-		input = getUserChoice();
-		if (input != '\0') {
-			sscanf(&input, "%lf", &newval);
-			l = newval;
-		}
+		ModBool = getUserInput(&userInput);
+		if(ModBool) sscanf(userInput, "%lf", &l);
 
 		printf("r = %lf. Enter a value to modify: \n", r);
-		input = getUserChoice();
-		if (input != '\0') {
-			sscanf(&input, "%lf", &newval);
-			r = newval;
-		}
-
+		ModBool = getUserInput(&userInput);
+		if(ModBool) sscanf(userInput, "%lf", &r);
+		
 		printf("Tc = %lf\n", Tc);
 		printf("kw = %lf\n", kw);
 		printf("kn = %lf\n", kn);

@@ -15,9 +15,10 @@ int main (void){
 
     double Tc = 150; // Tc is the required tempeture to be reached by the wax in °C.
     double Ta = 22; // Ta is the ambient tempeture in °C.
-    double kw = 0.25; // k1 is the thermal conductivity of wax in W/m-K.
+    double kc = 400; // kc is the thermal conductivity of copper in W/m-K.
     double OD = 2.0 * 2.54e-2; // OD is the outer diameter of the load in m.
     double ID = 1.8 * 2.54e-2; // ID is the inner diameter of the load in m.
+    double d = 0.2 *2.54e-2; // d is the distance from the surface of the wax bead to its core in m.
     double f = 100000; // f is the frequency of the induction heater in Hz.
     double t = 10; // t is the time required to reach the required tempeture in seconds.
     double p = 	6.9e-7; // p is the resistivity of stainless steel at 20 °C Ω/m.
@@ -31,17 +32,17 @@ int main (void){
     double A = M_PI * (pow(OD, 2) - pow(ID, 2)) / 4; // A is the cross-sectional area of the load.
     double R = p * l / A; // R is the resistance of the load.
 
-    /* Q = mcΔT and Q = Pt. Therefore, t = mcΔT / P 
+    /* Q = mcΔT and Q = Pt. Therefore, t = mcΔT / P
     In order to calculate Q, the specific heat & latent heat of wax and the conduction
     between the stainless steel spoon and the wax bead must be considered. */
 
-    // Find Q = mc*delta T required for the wax
-    double Q1 = mw * cw * (Tc - Ta) + mw * Lw; // 30 is the approximate weight of the wax in g. 2.14 is the specific heat of the wax in J/g-K. 210 is the latent heat of the wax in J/g.
-    // Find the effective area of contact surface between the spoon and the wax
+    // Find the integration ∫ Q dt = ∫ mc*dT to account for the entire heat over the time period
+    double Q1 = mw * cw * (Tc - Ta) * 10 + mw * Lw; // Solving the integral gives a constant multiplier of 10.
+    // Find the effective area of contact surface between the spoon and the wax. In this case, it is a generous surface area of the interior of the spoon. 
     double A1 = 2.0 * pow((ID / 2.0), 2.0) * M_PI;
 
     // Calculate the temperature of the spoon
-    double Ts = (Q1 / (kw * A1 * t)) + Tc; // kw is the thermal conductivity of the wax in W/m-K. A is the effective area of contact surface. Ts is the temperature of the spoon. t is the time required to reach the required tempeture.
+    double Ts = (Q1 / (kc * A1)) + Tc; // kw is the thermal conductivity of the wax in W/m-K. A is the effective area of contact surface. Ts is the temperature of the spoon. t is the time required to reach the required tempeture.
     // Find Q = mc*delta T required for the stainless steel spoon
     double Q2 = ms * cs * (Ts - Ta);
     
@@ -54,6 +55,7 @@ int main (void){
 
     // Find the power required to heat the load
     double P = i0 * i0 * R; // P is the power required for the load to reach the required tempeture in the given time.
+    // Induction heating efficiency of stainless steel is 0.3
     // Find the voltage required to heat the load
     double V = sqrt(P * R); // V is the voltage required to reach the required tempeture.
 

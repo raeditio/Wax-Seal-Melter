@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-#include <modpar.h>
+#include <C:\Users\Ryan\OneDrive - UBC\Documents\VSCode\projects\Wax Seal Melter\Wax-Seal-Melter\modpar.h>
 
 int main(void) {
 	double Tc = 150; // Tc is the required tempeture to be reached.
@@ -11,7 +11,7 @@ int main(void) {
 	double t = 30; // t is the time required to reach the required tempeture.
 	double p = 1.5e-6; // p is the resistivity of the nichrome wire.
 	double l = 1.0; // l is the length of the nichrome wire.
-	double r = 15e-3; // r is the radius of the nichrome wire.
+	double r = 1.5e-3; // r is the radius of the nichrome wire.
 	double x = 2.0e-3; // x is the thickness of the spoon.
 
 	bool ModBool = false;
@@ -84,13 +84,13 @@ int main(void) {
 	/* Td2 is the difference in temperature between the wax and the spoon in nominal conditions */
 	double Td2 = (Q1 / (kc * A1 / x)); // kw is the thermal conductivity of the wax in W/m-K. A is the effective area of contact surface. Td2 is the difference in temperature between the wax and the spoon. t is the time required to reach the required tempeture.
 	
-	/* Find required heat for stainless steel spoon */
-	double Q2 = 300 * 0.5 * (Tc + Td2 - 22); // 300 is the approximate weight of the spoon in g. 0.5 is the specific heat of the stainless steel spoon in J/g-K.
-	
+	/* Find required heat for the copper spoon */
+	double Q2 = 100 * 0.385 * (Tc + Td2 - 22); // 100 is the approximate weight of the spoon in g. 0.385 is the specific heat of the copper spoon in J/g-K.
+
 	/* Find required temperature for nichrome wire */
-	double A2 = r * l; // A is the effective area of contact surface between the spoon and the nichrome wire.
+	double A2 = M_PI * r * l; // A is the effective area of contact surface between the spoon and the nichrome wire.
 	double Td3 = (Q2 / (kc * A2)); /* kn is the thermal conductivity of the nichrome wire in W/m-K. A is the effective area of contact surface.
-	Td2 is the difference in temperature between the stainless steel spoon and the nichrome wire. t is the time required to reach the required tempeture.
+	Td2 is the difference in temperature between the copper spoon and the nichrome wire. t is the time required to reach the required tempeture.
 	x is the thickness of the spoon in m. */
 	
 	/* Find required heat for nichrome wire */
@@ -109,8 +109,8 @@ int main(void) {
 	/* Print the results */
 	printf("The required tempeture for wax is %lf C\n", Td1 + 22);
 	printf("The required heat for wax is %lf J\n", Q1);
-	printf("The required tempeture for stainless steel spoon is %lf C\n", (Td1 + Td2 + 22));
-	printf("The required heat for stainless steel spoon is %lf J\n", Q2);
+	printf("The required tempeture for copper spoon is %lf C\n", (Td1 + Td2 + 22));
+	printf("The required heat for copper spoon is %lf J\n", Q2);
 	printf("The required tempeture for nichrome wire is %lf C\n", (Td1 + Td2 + Td3 + 22));
 	printf("The required heat for nichrome wire is %lf J\n", Q3);
 	printf("The resistance of the nichrome wire is %lf ohms\n", R);

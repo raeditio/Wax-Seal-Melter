@@ -4,6 +4,15 @@
 #include <stdbool.h>
 #include <C:\Users\Ryan\OneDrive - UBC\Documents\VSCode\projects\Wax Seal Melter\Wax-Seal-Melter\modpar.h>
 
+void modifyvar(double *var, char varname[]) {
+	char userInput[100];
+	bool ModBool = false;
+	printf("%s = %lf. Enter a value to modify: \n", varname, *var);
+	ModBool = getUserInput(&userInput);
+	if(ModBool) sscanf(userInput, "%lf", var);
+	printf("%lf\n", *var);
+}
+
 int main(void) {
 	double Tc = 150; // Tc is the required tempeture to be reached.
 	double kc = 400; // k1 is the thermal conductivity of copper in W/m-K.
@@ -31,37 +40,14 @@ int main(void) {
 	char userchoice = getUserChoice();
 
 	if (userchoice == 'Y' || userchoice == 'y') {
-		printf("Tc = %lf. Enter a value to modify: \n", Tc);
-		ModBool = getUserInput(&userInput);
-		if(ModBool) sscanf(userInput, "%lf", &Tc);
-
-		printf("kc = %lf. Enter a value to modify: \n", kc);
-		ModBool = getUserInput(&userInput);
-		if(ModBool) sscanf(userInput, "%lf", &kc);
-
-		printf("d = %lf. Enter a value to modify: \n", d);
-		ModBool = getUserInput(&userInput);
-		if(ModBool) sscanf(userInput, "%lf", &d);
-
-		printf("t = %lf. Enter a value to modify: \n", t);
-		ModBool = getUserInput(&userInput);
-		if(ModBool) sscanf(userInput, "%lf", &t);
-
-		printf("p = %lf. Enter a value to modify: \n", p);
-		ModBool = getUserInput(&userInput);
-		if(ModBool) sscanf(userInput, "%lf", &p);
-
-		printf("l = %lf. Enter a value to modify: \n", l);
-		ModBool = getUserInput(&userInput);
-		if(ModBool) sscanf(userInput, "%lf", &l);
-
-		printf("r = %lf. Enter a value to modify: \n", r);
-		ModBool = getUserInput(&userInput);
-		if(ModBool) sscanf(userInput, "%lf", &r);
-
-		printf("x = %lf. Enter a value to modify: \n", x);
-		ModBool = getUserInput(&userInput);
-		if(ModBool) sscanf(userInput, "%lf", &x);
+		modifyvar(&Tc, "Tc");
+		modifyvar(&kc, "kc");
+		modifyvar(&d, "d");
+		modifyvar(&t, "t");
+		modifyvar(&p, "p");
+		modifyvar(&l, "l");
+		modifyvar(&r, "r");
+		modifyvar(&x, "x");
 		
 		printf("Tc = %lf\n", Tc);
 		printf("kc = %lf\n", kc);
@@ -77,7 +63,7 @@ int main(void) {
 	double Td1 = Tc - 22; // Td1 is the difference between the required tempeture and the room tempeture.
 	
 	/* Find required heat for wax over 10s */
-	double Q1 = 30 * 2.14 * Td1 * 10 + 30 * 210; // 30 is the approximate weight of the wax in g. 2.14 is the specific heat of the wax in J/g-K. 210 is the latent heat of the wax in J/g. Through integration, the constant multiplier is 10.
+	double Q1 = 5 * 2.14 * Td1 * 10 + 30 * 210; // 5 is the approximate weight of the wax in g. 2.14 is the specific heat of the wax in J/g-K. 210 is the latent heat of the wax in J/g. Through integration, the constant multiplier is 10.
 	
 	double A1 = 2.0 * pow((d / 2.0), 2.0) * M_PI; // A is the effective area of contact surface between the spoon and the wax.
 	
@@ -85,7 +71,7 @@ int main(void) {
 	double Td2 = (Q1 / (kc * A1 / x)); // kw is the thermal conductivity of the wax in W/m-K. A is the effective area of contact surface. Td2 is the difference in temperature between the wax and the spoon. t is the time required to reach the required tempeture.
 	
 	/* Find required heat for the copper spoon */
-	double Q2 = 100 * 0.385 * (Tc + Td2 - 22); // 100 is the approximate weight of the spoon in g. 0.385 is the specific heat of the copper spoon in J/g-K.
+	double Q2 = 20 * 0.385 * (Tc + Td2 - 22); // 20 is the approximate weight of the spoon in g. 0.385 is the specific heat of the copper spoon in J/g-K.
 
 	/* Find required temperature for nichrome wire */
 	double A2 = M_PI * r * l; // A is the effective area of contact surface between the spoon and the nichrome wire.

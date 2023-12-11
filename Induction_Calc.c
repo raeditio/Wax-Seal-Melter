@@ -4,7 +4,7 @@
 #include <C:\Users\Ryan\OneDrive - UBC\Documents\VSCode\projects\Wax Seal Melter\Wax-Seal-Melter\modpar.h>
 
 int main (void){
-    /* this execution intends to calculate the induction heating of a load with OD = 2" and ID = 1.8" at 100 kHz frequency
+    /* this execution intends to calculate the induction heating of a load with OD = 2" and ID = 1.8" at 60 Hz frequency
     using a 1/4" diameter copper tube
     the load is 0.7" long
     the coil is 1.5" long
@@ -18,20 +18,19 @@ int main (void){
     double OD = 1.7 * 2.54e-2; // OD is the outer diameter of the load in m.
     double ID = 1.5 * 2.54e-2; // ID is the inner diameter of the load in m.
     double d = 0.2 *2.54e-2; // d is the distance from the surface of the wax bead to its core in m.
-    double f = 100000; // f is the frequency of the induction heater in Hz.
-    double t = 30; // t is the time required to reach the required tempeture in seconds.
+    double f = 60; // f is the frequency of the induction heater in Hz.
+    double t = 25; // t is the time required to reach the required tempeture in seconds.
     double p = 	1.68e-8; // p is the resistivity of copper at 20 °C in Ω/m.
-    double l = 0.7 * 2.54e-2; // l is the length of the load in m.
     double x = 2.0e-3; // x is the thickness of the load in m.
-    double mw = 30; // mw is the mass of the wax in g.
+    double mw = 5; // mw is the mass of the wax in g.
     double cw = 2.14; // specific heat of wax is 2.14 J/g-K
     double Lw = 210; // latent heat of wax is 210 J/g
-    double ms = 100; // ms is the mass of the copper spoon in g.
+    double ms = 20; // ms is the mass of the copper spoon in g.
     double cs = 0.385; // cs is the specific heat of copper in J/g-K.
     double e = 0.7; // e is the efficiency of the induction heating on impure copper spoon.
 
-    double A = M_PI * (pow(OD, 2) - pow(ID, 2)) / 4; // A is the cross-sectional area of the load.
-    double R = p * l / A; // R is the resistance of the load.
+    double A = M_PI * pow(OD,2) / 4; // A is the cross-sectional area of the load.
+    double R = p * x / A; // R is the resistance of the load.
 
     /* Q = mcΔT and Q = Pt. Therefore, t = mcΔT / P
     In order to calculate Q, the specific heat & latent heat of wax and the conduction
@@ -58,8 +57,8 @@ int main (void){
     double P = i0 * i0 * R; // P is the power required for the load to reach the required tempeture in the given time.
     // Account for efficiency
     double P0 = P / e;
-    // Find the voltage required to heat the load
-    double V0 = sqrt(P0 * R); // V is the voltage required to reach the required tempeture.
+    // // Find the voltage required to heat the load
+    // double V0 = sqrt(P0 * R); // V is the voltage required to reach the required tempeture.
 
     // Print the results
     printf("The required tempeture for wax is %lf C\n", Tc);
@@ -67,9 +66,9 @@ int main (void){
     printf("The required tempeture for copper spoon is %lf C\n", Ts);
     printf("The required heat for copper spoon is %lf J\n", Q2);
     printf("The resistance of the load is %lf ohms\n", R);
-    printf("The required current is %lf A\n", i0);
+    // printf("The required current is %lf A\n", i0);
     printf("The required power is %lf W\n", P0);
-    printf("The required voltage is %lf V\n", V0);
+    // printf("The required voltage is %lf V\n", V0);
 
     // printf("%lf\n", Q1);
     // printf("%lf\n", kc);

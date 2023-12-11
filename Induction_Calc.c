@@ -18,8 +18,8 @@ int main (void){
     double OD = 1.7 * 2.54e-2; // OD is the outer diameter of the load in m.
     double ID = 1.5 * 2.54e-2; // ID is the inner diameter of the load in m.
     double d = 0.2 *2.54e-2; // d is the distance from the surface of the wax bead to its core in m.
-    double f = 60; // f is the frequency of the induction heater in Hz.
-    double t = 25; // t is the time required to reach the required tempeture in seconds.
+    double f = 20e3; // f is the frequency of the induction heater in Hz.
+    double t = 13; // t is the time required to reach the required tempeture in seconds.
     double p = 	1.68e-8; // p is the resistivity of copper at 20 °C in Ω/m.
     double x = 2.0e-3; // x is the thickness of the load in m.
     double mw = 5; // mw is the mass of the wax in g.
@@ -57,8 +57,11 @@ int main (void){
     double P = i0 * i0 * R; // P is the power required for the load to reach the required tempeture in the given time.
     // Account for efficiency
     double P0 = P / e;
-    // // Find the voltage required to heat the load
-    // double V0 = sqrt(P0 * R); // V is the voltage required to reach the required tempeture.
+    /* Find the Resistance Limits */
+    double V0 = 24; // V0 is the voltage supplied to the induction coil.
+    double R0 = V0 * V0 / P0; // R0 is the resistance of the induction coil.
+    double l0 = .5; // l0 is the length of the induction coil in m.
+    double d0 = 2 * sqrt(p * l0 / R0 / M_PI); // d0 is the diameter of the induction coil in m.
 
     // Print the results
     printf("The required tempeture for wax is %lf C\n", Tc);
@@ -69,6 +72,7 @@ int main (void){
     // printf("The required current is %lf A\n", i0);
     printf("The required power is %lf W\n", P0);
     // printf("The required voltage is %lf V\n", V0);
+    printf("The required diameter of the induction coil is %lf mm\n", d0 * 1e3);
 
     // printf("%lf\n", Q1);
     // printf("%lf\n", kc);
